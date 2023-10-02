@@ -1,6 +1,28 @@
 from flask import Flask, render_template, request, Response
 import g4f
 from g4f.Provider import DeepAi
+import threading
+import subprocess    
+
+url = "https://flask-ai.onrender.com"
+def my_function():
+    # 请求主页，保持唤醒
+    try:
+        output = subprocess.check_output(["curl", "-m8", url])
+        print("保活-请求主页-命令行执行成功，响应报文:", output)
+    except subprocess.CalledProcessError as e:
+        print("保活-请求主页-命令行执行错误：", e)
+
+def set_interval(func, sec):
+    def func_wrapper():
+        set_interval(func, sec)
+        func()
+    t = threading.Timer(sec, func_wrapper)
+    t.start()
+    return t
+
+# 每隔2秒执行一次 my_function
+set_interval(my_function, 2)
 
 app = Flask(__name__)
 
