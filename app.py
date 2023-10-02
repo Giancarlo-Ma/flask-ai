@@ -22,7 +22,7 @@ def set_interval(func, sec):
     return t
 
 # 每隔2秒执行一次 my_function
-set_interval(my_function, 2)
+set_interval(my_function, 60)
 
 app = Flask(__name__)
 
