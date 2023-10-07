@@ -45,7 +45,7 @@ def stream():
                     parts.append(str(random.randint(0, 255)))
                 return ".".join(parts)
 
-            response = ChatCompletion.create(model=model, stream=stream, messages=messages, headers={'x-forwarded-for': generate_random_ip()})
+            response = ChatCompletion.create(model=model, stream=stream, messages=messages, timeout=180, headers={'x-forwarded-for': generate_random_ip()})
 
             completion_id = "".join(random.choices(string.ascii_letters + string.digits, k=28))
             completion_timestamp = int(time.time())
